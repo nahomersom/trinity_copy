@@ -15,8 +15,15 @@ const SelectedUserContext = createContext<SelectedUserContextType | null>(null);
 // Create a provider component to wrap your application
 export const SelectedUserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [selectedUserData, setSelectedUserState] = useState<Users | null>(() => {
-        const storedUserData = localStorage.getItem('selectedUserData');
-        return storedUserData ? JSON.parse(storedUserData) : null;
+        if (typeof window !== 'undefined') {
+            const storedUserData = localStorage.getItem('selectedUserData');
+            return storedUserData ? JSON.parse(storedUserData) : null;
+        } else {
+            // Handle the case where localStorage is not available
+            return null;
+        }
+        // const storedUserData = localStorage.getItem('selectedUserData');
+        // return storedUserData ? JSON.parse(storedUserData) : null;
     });
 
     // Update local storage whenever selectedUserData changes

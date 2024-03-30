@@ -1,21 +1,34 @@
-"use client";
+// "use client";
 
 import { Children, useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
+import { NavBarType, UserRole } from "@/app/app-constants";
+import { unsetToken } from "@/app/api/auth";
+import router from "next/router";
 type DropDownChild = {
   title: string;
   link: string;
 };
 type DropdownProps = {
   // children: React.ReactNode
-  children: DropDownChild[];
+  children?: NavBarType[];
   title: string;
+  isLogout : boolean;
+  link? : string;
+  navigateToPage :(page: string) => void;
+  userRole : string;
+  
 };
 // https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js
 
-export default function NavDropdown({ title, children }: DropdownProps) {
+export default function NavDropdown({ title, children, link, userRole, isLogout,navigateToPage }: DropdownProps) {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const logout = () => {
+    unsetToken();
 
+
+    navigateToPage("/signin");
+  };
   return (
     <li className="dropdown group md:px-8 px-0  ">
       <button
@@ -30,6 +43,7 @@ export default function NavDropdown({ title, children }: DropdownProps) {
       {/* <!-- Dropdown menu --> */}
       <div
         id="dropdownNavbar"
+        onClick={() => isLogout? navigateToPage("/signin"): link != null? router.replace(link):null}
         className=" hidden
         absolute mt-0  -z-1 group-hover:block bg-[#002937] text-white text-base  list-none  rounded shadow my-4 w-44"
       >
@@ -38,7 +52,13 @@ export default function NavDropdown({ title, children }: DropdownProps) {
           aria-labelledby="dropdownLargeButton"
         >
           {/*  */}
-          {children.map((value, index) => (
+          {children?.map((value, index) => (
+            ( value.isAdminAllowed && userRole.toLowerCase() == "admin")
+            || ( value.isMemberAllowed && userRole.toLowerCase() ==  "church-member" )
+            || ( value.isPublicAllowed && userRole.toLowerCase() ==  "public")
+            || ( value.isStudentAllowed && userRole.toLowerCase() ==  "student")
+             
+             ?
             <li key={index}>
               <a
                 href={value.link}
@@ -47,6 +67,7 @@ export default function NavDropdown({ title, children }: DropdownProps) {
                 {value.title}
               </a>
             </li>
+            :null
           ))}
         </ul>
       </div>

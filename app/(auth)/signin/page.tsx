@@ -29,15 +29,20 @@ export default function SignIn() {
 
     try {
       const formData = new FormData(event.currentTarget);
+      // ?filters[field][operator]=value
+      var studentQuery =  `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local?filters[role][name]=student`
+      var normalQuery = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local`
       const res = await fetcher(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local`,
+       isPastorsCollage ? studentQuery : normalQuery,
         {
           method: "POST",
           header: "Content-Type: application/json",
           body: formData,
         }
       );
-      if (res.jwt != null) {
+      console.log("howwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+      console.log(res)
+      if (res.jwt != null ) {
         var data = await fetcher(
           `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me?populate=*`,
           {
@@ -47,7 +52,10 @@ export default function SignIn() {
             },
           }
         );
-        if (data) {
+        if  (
+          (data.role.name === "student" && isPastorsCollage) ||
+          (data.role.name !== "student" && !isPastorsCollage)
+      ) {
           toast.success("login succesfull");
 
           data.jwt = res.jwt;
@@ -57,7 +65,7 @@ export default function SignIn() {
           isPastorsCollage ? router.push("/user-home") : router.push("/");
           // ...
         } else {
-          throw Error(data.error.message);
+          throw Error("incorrect email or password");
         }
       } else {
         throw Error(res.error.message);

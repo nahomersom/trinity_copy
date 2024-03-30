@@ -1,11 +1,13 @@
-"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { Transition } from "@headlessui/react";
-import Link from "next/link";
 import Accordion from "../utils/accordion";
-
-export default function MobileMenu() {
+import { navBarItems } from "@/app/app-constants";
+ type MobileMenuType ={
+  userRole : string,
+  navigateToPage :(page: string) => void;
+ }
+export default function MobileMenu({userRole, navigateToPage }:MobileMenuType ) {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
   const trigger = useRef<HTMLButtonElement>(null);
@@ -74,54 +76,26 @@ export default function MobileMenu() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          
-          <Accordion
-              title="About"
-              children={[
-                { title: "Our Pastors", link: "#" },
-                { title: "Our Staff", link: "/ourStaff" },
-                { title: "Our Partners", link: "/ourPartners" },
-                { title: "History", link: "/ourHistory" },
-              ]}
-            ></Accordion>
-            <Accordion
-              title="Ministries"
-              children={[
-                { title: "Explore", link: "#" },
-                { title: "Children's Ministry", link: "#" },
-                { title: "Women's Ministry", link: "#" },
-                { title: "Community Group", link: "#" },
-                { title: "Worship", link: "#" },
-              ]}
-            ></Accordion>
-            <Accordion
-              title="Resources"
-              children={[
-                { title: "Sermons", link: "/sermons" },
-                { title: "Seminars", link: "#" },
-                { title: "Books", link: "#" },
-                { title: "Blog", link: "#" },
-              ]}
-            ></Accordion>
-            <Accordion
-              title="Connect"
-              children={[
-                { title: "I'm New", link: "#" },
-                { title: "Events", link: "#" },
-                { title: "Serving", link: "#" },
-                { title: "Baptism", link: "#" },
-              ]}
-            ></Accordion>
-            <Accordion
-              title="Sign-In"
-              children={[
-                {
-                  title: "Pastors collage",
-                  link: "/signin?isPastorsCollage=true",
-                },
-                { title: "Church members", link: "/signin" },
-              ]}
-            ></Accordion>
+           {navBarItems.map((value, index) => (
+             ( value.isAdminAllowed && userRole.toLowerCase() == "admin")
+             || ( value.isMemberAllowed && userRole.toLowerCase() ==  "church-member" )
+             || ( value.isPublicAllowed && userRole.toLowerCase() ==  "public")
+             || ( value.isStudentAllowed && userRole.toLowerCase() ==  "student")
+             
+             ?
+              <Accordion
+                title={value.title}
+                link={value.link}
+                navigateToPage={navigateToPage}
+                children={value.children}
+                userRole={userRole}
+                isLogout = {value.islogout??false}
+
+              ></Accordion>:null
+            ))
+            
+            }
+        
         </Transition>
       </div>
     </div>

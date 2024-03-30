@@ -8,6 +8,7 @@ type AppUser = {
   profilePicture: any;
   phone? : string;
   email? : string;
+  // role ? : {name : string};
   fullName? : string;
 };
 
@@ -19,6 +20,7 @@ export const setToken = (user: any) => {
 
   localStorage.setItem("id", user.id);
   localStorage.setItem("username", user.username);
+  localStorage.setItem("userRole", user.role?.name?.toLowerCase()??"public" );
   localStorage.setItem("jwt", user.jwt);
   console.log("token -------------------", localStorage.getItem("jwt"))
   localStorage.setItem(
@@ -35,6 +37,8 @@ export const unsetToken = () => {
   localStorage.removeItem("jwt");
   localStorage.removeItem("username");
   localStorage.removeItem("userProfileUrl");
+  localStorage.removeItem("userRole");
+
   
 };
 export const getUserType = () => {
@@ -46,7 +50,7 @@ export const getUserType = () => {
         Authorization: `Bearer ${jwt}`,
       },
     }).then((data) => {
-      return data.type;
+      return data.role.type;
     });
   }
   return;

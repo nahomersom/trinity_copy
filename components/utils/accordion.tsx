@@ -1,12 +1,13 @@
-"use client";
-
+import { unsetToken } from "@/app/api/auth";
+import { NavBarType } from "@/app/app-constants";
 import { useState, useRef, useEffect } from "react";
-type DropDownChild = {
-  title: string;
-  link: string;
-};
+
 type AccordionpProps = {
-  children: DropDownChild[];
+  children?: NavBarType[];
+  userRole: string;
+  link?: string;
+  isLogout: boolean;
+  navigateToPage: (page: string) => void;
   tag?: string;
   title: string;
   active?: boolean;
@@ -15,13 +16,23 @@ type AccordionpProps = {
 export default function Accordion({
   children,
   tag = "li",
+  link,
+  userRole,
+  isLogout,
+  navigateToPage,
   title,
   active = false,
 }: AccordionpProps) {
   const [accordionOpen, setAccordionOpen] = useState<boolean>(false);
   const accordion = useRef<HTMLDivElement>(null);
   const Component = tag as keyof JSX.IntrinsicElements;
+  const logout = () => {
+    unsetToken();
 
+
+    navigateToPage("/signin");
+  };
+  // Inside your component
   useEffect(() => {
     setAccordionOpen(active);
   }, [accordion]);
@@ -31,8 +42,18 @@ export default function Accordion({
       <button
         className="flex items-center px-8 w-full justify-between text-black text-lg font-medium text-left py-5 border-t border-gray-200"
         onClick={(e) => {
-          e.preventDefault();
-          setAccordionOpen(!accordionOpen);
+          if (isLogout) {
+            logout();
+          }
+          if (
+            (link != undefined || link != null) &&
+            (children == undefined || children == null)
+          ) {
+            navigateToPage(link);
+          } else {
+            e.preventDefault();
+            setAccordionOpen(!accordionOpen);
+          }
         }}
         aria-expanded={accordionOpen}
       >
@@ -40,7 +61,7 @@ export default function Accordion({
         {/* downward arrow  */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`h-5 w-5 ml-2 ${accordionOpen?"hidden":""}`}
+          className={`h-5 w-5 ml-2 ${accordionOpen ? "hidden" : ""}`}
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -52,7 +73,7 @@ export default function Accordion({
         {/* upward arrow */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`h-5 w-5 ml-2 ${!accordionOpen?"hidden":""}`}
+          className={`h-5 w-5 ml-2 ${!accordionOpen ? "hidden" : ""}`}
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -76,16 +97,22 @@ export default function Accordion({
           aria-labelledby="dropdownLargeButton"
         >
           {/*  */}
-          {children.map((value, index) => (
-            <li key={index}>
-              <a
-                href={value.link}
-                className="text-sm hover:bg-gray-100 hover:text-[#002937] text-white block text-left px-4 py-2"
-              >
-                {value.title}
-              </a>
-            </li>
-          ))}
+          {children?.map((value, index) =>
+            (value.isAdminAllowed && userRole.toLowerCase() == "admin") ||
+            (value.isMemberAllowed &&
+              userRole.toLowerCase() == "church-member") ||
+            (value.isPublicAllowed && userRole.toLowerCase() == "public") ||
+            (value.isStudentAllowed && userRole.toLowerCase() == "student") ? (
+              <li key={index}>
+                <a
+                  href={value.link}
+                  className="text-sm hover:bg-gray-100 hover:text-[#002937] text-white block text-left px-4 py-2"
+                >
+                  {value.title}
+                </a>
+              </li>
+            ) : null
+          )}
         </ul>
       </div>
     </Component>
