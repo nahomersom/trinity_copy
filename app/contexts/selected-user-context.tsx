@@ -2,7 +2,11 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Users } from '../api/student';
+import { registerLicense } from '@syncfusion/ej2-base';
 
+// Registering Syncfusion license key
+
+registerLicense('Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCekxwWmFZfVpgdV9DaFZQTWY/P1ZhSXxXdkZgWX5ddXxUT2deVkU=');
 // Define the type for the context value
 interface SelectedUserContextType {
     selectedUserData: Users | null;

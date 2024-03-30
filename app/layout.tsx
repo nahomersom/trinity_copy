@@ -1,3 +1,4 @@
+
 import './css/style.css'
 
 import { Inter, Playfair_Display , Raleway } from 'next/font/google'
@@ -33,7 +34,6 @@ export const metadata = {
 interface RootLayoutProps {
   children: ReactNode;
 }
-
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <SelectedUserProvider>

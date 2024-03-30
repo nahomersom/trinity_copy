@@ -1,9 +1,25 @@
+"use client";
 import Image from "next/image";
 import church from "@/public/images/church_icon.svg";
 import pastor from "@/public/images/pastor.svg";
 import play from "@/public/images/play_icon.svg";
+import ModalVideo from "./modal-video";
+import { useEffect, useState } from "react";
+import { getPastorMessage } from "@/app/api/sermons";
 
 export default function AmNew() {
+
+  const [pastorMessage, setPastorMessage] = useState<any>(null);
+
+  useEffect(() => {
+    getPastorMessage()?.then((res:any) => {
+      if (res) {
+       const videoUrl = res.attributes.video.data.attributes.url;
+        setPastorMessage(videoUrl);
+      }
+    });
+  }, []);
+  
   return (
     <section className="bg-[#002937] text-white p-16 md:pl-[10%] md:pr-16 pl-4 pr-4">
       <div className="flex items-center justify-center md:justify-start gap-6 ">
@@ -35,15 +51,10 @@ export default function AmNew() {
           <h3 className="text-center font-semibold text-[24px]">Message From Our Pastor</h3>
         </div>
         <div className=" relative border-solid border-1 rounded-3xl">
-          <Image
-          className=" md:max-w-none mx-auto rounded"
-           src={pastor} alt=""></Image>
+       
           
-          <Image
-         className="  md:max-w-none mx-auto rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-         width={40}
+          <ModalVideo   thumb={"images/pastor.svg"} thumbWidth={450} thumbHeight={400} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+pastorMessage} videoWidth={650} videoHeight={600}/>
 
-          src={play} alt=""></Image>
         </div>
       </div>
     </section>

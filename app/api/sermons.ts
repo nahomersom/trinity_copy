@@ -50,6 +50,26 @@ export const getSermonsList =  () => {
 return;
  
 };
+export const getPastorMessage = async (): Promise<any[]> => {
+
+  
+  try {
+    const response = await fetcher(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/message-from-our-pastor?populate=*`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const pastorMessage: any[] = response.data;
+
+    return pastorMessage;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return []; // Return empty array if an error occurs during fetch
+  }
+};
 
 export const getLatestSermon = () => {
     const jwt = getTokenFromLocalStorage();

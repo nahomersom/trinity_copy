@@ -65,9 +65,15 @@ export default function UserHome() {
             Welcome {userName}
           </div>
 
-          <div className=" p-2 text-3xl bg-[#002937] font-raleway font-black leading-9">
-            Announcement Board
-          </div>
+          <button
+  onClick={() => {
+    // Add your routing logic here
+    router.push('/announcement-board');
+  }}
+  className="p-2 text-3xl bg-[#002937] font-raleway font-black leading-9 hover:bg-[#004050] focus:bg-[#004050] focus:outline-none cursor-pointer"
+>
+  Announcement Board
+</button>
           <div className="py-16 flex flex-col justify-around gap-10  w-full items-stretch ">
             {announcements.map((value, index) => (
               <div className="flex flex-col justify-around gap-10  w-full items-stretch">

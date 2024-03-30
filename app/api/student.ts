@@ -54,6 +54,19 @@ export type Users = {
   };
 };
 
+export type AnnouncementModel = {
+  id: number,
+            attributes: {
+                Date: string;
+                createdAt: Date,
+                updatedAt: Date,
+                publishedAt: Date,
+                Schedule: string ,
+                Start_Time: string,
+                End_Time: string,
+                Todo: string
+            }
+}
 export const getUsersList = async (): Promise<Users[]> => {
     const jwt = getTokenFromLocalStorage();
     if (!jwt) {
@@ -79,4 +92,27 @@ export const getUsersList = async (): Promise<Users[]> => {
     }
   };
   
+  export const getAnnouncement = async (date:any): Promise<AnnouncementModel[]> => {
+    const jwt = getTokenFromLocalStorage();
+    if (!jwt) {
+      return []; // Return empty array if JWT token is not available
+    }
   
+    try {
+      const response = await fetcher(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/announcements?filters[Date][$eq]=${date}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      const announcementData: AnnouncementModel[] = response.data;
+  
+      return announcementData;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      return []; // Return empty array if an error occurs during fetch
+    }
+  };

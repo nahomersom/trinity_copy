@@ -20,10 +20,79 @@
 @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-react-inputs/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-react-dropdowns/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-react-calendars/styles/material.css";
 /* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
 @layer utilities {
     .rtl {
         direction: rtl;
     }
 }
+.e-calendar {
+    background-color: #002937;
+    color: white !important;
+    width: 100% !important; /* Set width to 100% for responsiveness */
+    max-width: 700px !important; /* Optionally set a max-width */
+}
+.e-calendar .e-header .e-title{
+    color:white  !important;
+}
+.e-calendar .e-header span{
+    color: white !important;
+}
+.e-calendar .e-content span.e-day{
+    color: white !important;
+}
+.e-calendar .e-content th
+{
+    color: white !important;
+}
+.e-calendar .e-content td.e-focused-date.e-today span.e-day, .e-bigger.e-small .e-calendar .e-content td.e-focused-date.e-today span.e-day {
+    background: #002937;
+    border: 1px solid white;
+    box-shadow: none;
+    color: white;
 
+}.e-calendar .e-content td:hover span.e-day, .e-calendar .e-content td:focus span.e-day, .e-bigger.e-small .e-calendar .e-content td:hover span.e-day, .e-bigger.e-small .e-calendar .e-content td:focus span.e-day {
+    background-color: white !important;
+    border: 2px solid;
+    color: #002937 !important;
+}
+.e-calendar .e-content td.e-focused-date.e-today span.e-day {
+    background-color: white !important;
+    color: #002937 !important;
+}
+.e-calendar .e-content td.e-selected span.e-day{
+    background-color: white !important;
+    color: #002937 !important;
+}
+.e-calendar .e-calendar-content-table .e-cell.e-focused-cell span.e-day {
+    box-shadow: 0 0 0 1px white !important;
+    border-radius: 50%;
+}
+.e-calendar .e-content td.e-today span.e-day{
+    border: 1px solid white !important;
+}
+.e-calendar .e-content.e-year td > span.e-day{
+    color: #002937 !important;
+}
+.e-calendar .e-content.e-decade td > span.e-day{
+    color: #002937 !important;
+
+}
+/* .e-calendar .e-content td.e-hovered-date.e-today span.e-day, .e-bigger.e-small .e-calendar .e-content td.e-hovered-date.e-today span.e-day {
+    background: #002937;
+    border: 1px solid white;
+    box-shadow: none;
+    color: white;
+}
+.e-calendar .e-content td.e-selected span.e-day, .e-bigger.e-small .e-calendar .e-content td.e-selected span.e-day {
+    background-color: #002937;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+} */
+.e-btn.e-flat.e-primary, .e-css.e-btn.e-flat.e-primary {
+    background: transparent;
+    border-color: transparent;
+    color: #002937;
+}
