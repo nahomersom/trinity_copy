@@ -95,6 +95,7 @@ export default function Header({
              
              ?
               <NavDropdown
+                key={index}
                 title={value.title}
                 link={value.link}
                 children={value.children}

@@ -27,7 +27,14 @@ export default function ModalVideo({
 }: ModalVideoProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
+  const containerStyle = {
+    width: thumbWidth,
+    height: thumbHeight,
+    borderRadius: "30px", // Adjust the border radius as needed
+    backgroundImage: `url(${thumb})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
   return (
     <div className="flex justify-center">
       {/* Video thumbnail */}
@@ -38,14 +45,19 @@ export default function ModalVideo({
         }}
         aria-label="Watch the video"
       >
-        <Image
-          className="rounded-3xl shadow-2xl transition-shadow duration-300 ease-in-out"
-          src={thumb.length ==0 || !thumb ?"images/pastor.svg":thumb}
+        {/* thumbnail image  */}
+        <div style={containerStyle}></div>
+        {/*  */}
+        {/* <Image
+          className={`rounded-3xl shadow-2xl max-w-[${thumbWidth}] max-h-[${thumbHeight}] transition-shadow duration-300 ease-in-out`}
+          src={thumb.length ==0 || thumb == null ?"/images/pastor.svg":thumb}
           width={thumbWidth}
           height={thumbHeight}
           priority
           alt={thumbAlt}
+          objectFit="cover"
         />
+       */}
         {/* Play icon */}
         <Image
           className="absolute pointer-events-none group-hover:scale-110 transition-transform duration-300 ease-in-out"

@@ -8,9 +8,9 @@ export type StaffType = {
   description?: string;
 };
 
-export const getStaffList = () => {
+export const getStaffList = async () => {
   var staffs: StaffType[] = [];
-  return fetcher(
+  await fetcher(
     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/staffs?populate=*`,
     {
       headers: {
@@ -19,6 +19,7 @@ export const getStaffList = () => {
     }
   ).then((d: any) => {
     var data = d.data;
+    console.log("total count ------------------- ",d.data.length)
     console.log("--------------------",d.data)
      data?.map((p: any) => {
     console.log("$$$$$$$$$$$$$$$$$$4",p.attributes.image)
@@ -34,7 +35,8 @@ export const getStaffList = () => {
       });
     });
     console.log("stafffffffff-----",staffs)
-    return staffs;
+    
   });
+  return staffs;
   
 };

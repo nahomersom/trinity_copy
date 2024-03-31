@@ -84,6 +84,7 @@ export default function MobileMenu({userRole, navigateToPage }:MobileMenuType ) 
              
              ?
               <Accordion
+              key={index}
                 title={value.title}
                 link={value.link}
                 navigateToPage={navigateToPage}

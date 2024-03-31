@@ -12,17 +12,18 @@ export type SermonType = {
   vedioUrl: string;
 };
 
-export const getSermonsList =  () => {
+export const getSermonsList =  async () => {
   const jwt = getTokenFromLocalStorage();
   var sermonsList: SermonType[] = [];
-  if (jwt) {
+  console.log("are u callledddddddddddddddddddddddddd")
+  // if (jwt) {
    
-   return  fetcher(
+   return await  fetcher(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sermons?populate=*`,
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
+          // Authorization: `Bearer ${jwt}`,
         },
       }
     ).then((d : any) => {
@@ -46,8 +47,8 @@ export const getSermonsList =  () => {
       console.log(sermonsList);
       return sermonsList;
     });
-}
-return;
+// }
+// return;
  
 };
 export const getPastorMessage = async (): Promise<any[]> => {
@@ -81,14 +82,11 @@ export const getLatestSermon = () => {
         description: "",
         vedioUrl: ""
     }
-    if (jwt) {
-     
      return  fetcher(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sermons?sort=date:desc&pagination[page]=1&pagination[pageSize]=1&populate=*`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
           },
         }
       ).then((d : any) => {
@@ -107,6 +105,4 @@ export const getLatestSermon = () => {
           return latestSermon
       });
   }
-  return;
-   
-};
+;

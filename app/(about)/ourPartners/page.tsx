@@ -40,6 +40,7 @@ export default function OurPartners() {
           <div className="flex flex-col justify-around gap-16 py-16 w-full items-stretch  px-0">
             {partnersList.map((value, index) => (
               <Partner
+              key={index}
                 name={value.name}
                 image={
                    value.image

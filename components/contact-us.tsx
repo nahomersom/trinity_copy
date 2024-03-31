@@ -10,16 +10,24 @@ export default function ContactUs() {
       style={{ backgroundImage: "url('images/pattern_bg.svg')" }}
     >
       <div className="relative h-[67vh]  ">
-        <Image
-          className=" md:max-w-none mx-auto rounded h-full w-full md:h-full "
+        <a href="https://maps.app.goo.gl/yS5uDHXdKGm769XX8" target="_blank"><Image
+          className=" md:hidden md:max-w-none mx-auto rounded h-full w-full md:h-full "
           src={map}
           layout="fill"
           objectFit="cover"
           alt=""
-        ></Image>
-        <div className=" px-2 md:px-16 py-8 max-h-1/1 w-[90%]  md:w-[36%] bg-[#002937] border-solid border-1 rounded-[40px]
-          absolute bottom-0 left-1/2 transform -translate-x-1/2 ">
-            
+        ></Image></a>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.023424633888!2d38.7290769750182!3d8.969988291088994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b875171824f97%3A0xe18127f9afdc87d2!2sTrinity%20Fellowship%20Church%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1711906223579!5m2!1sen!2set"
+          className="hidden md:flex md:max-w-none mx-auto rounded h-full w-full md:h-full "
+          width="600"
+          height="450"
+          loading="lazy"
+        ></iframe>
+        <div
+          className=" px-2 md:px-16 py-8 max-h-1/1 w-[90%]  md:w-[36%] bg-[#002937] border-solid border-1 rounded-[40px]
+          absolute bottom-0 left-1/2 transform -translate-x-1/2 "
+        >
           <Image
             className="md:max-w-none mx-auto rounded"
             src={church}

@@ -14,7 +14,7 @@ export default function AmNew() {
   useEffect(() => {
     getPastorMessage()?.then((res:any) => {
       if (res) {
-       const videoUrl = res.attributes.video.data.attributes.url;
+       const videoUrl = res.attributes?.video.data.attributes.url;
         setPastorMessage(videoUrl);
       }
     });
@@ -53,7 +53,7 @@ export default function AmNew() {
         <div className=" relative border-solid border-1 rounded-3xl">
        
           
-          <ModalVideo   thumb={"images/pastor.svg"} thumbWidth={450} thumbHeight={400} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+pastorMessage} videoWidth={650} videoHeight={600}/>
+          <ModalVideo   thumb={"images/pastor.svg"} thumbWidth={280} thumbHeight={170} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+pastorMessage} videoWidth={650} videoHeight={600}/>
 
         </div>
       </div>

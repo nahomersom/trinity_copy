@@ -57,7 +57,7 @@ export default function LatestSermon() {
           ></Image> */}
         {/* </div> */}
         <div className=" items-center">
-                <ModalVideo   thumb={"images/pastor.svg"} thumbWidth={450} thumbHeight={400} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+latestSermon.vedioUrl} videoWidth={650} videoHeight={600}/>
+                <ModalVideo   thumb={"images/pastor.svg"} thumbWidth={400} thumbHeight={350} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+latestSermon.vedioUrl} videoWidth={650} videoHeight={600}/>
 
                 </div>
         <div className="">

@@ -13,14 +13,24 @@ type StaffDetailType = {
 
 
 export default function StaffDetail(props: StaffDetailType) {
+  const containerStyle = {
+    width: 205,
+    height: 297,
+    borderRadius: "18px", // Adjust the border radius as needed
+    backgroundImage: `url(${process.env.NEXT_PUBLIC_STRAPI_API_URL+props.image.url})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
   return (
    <div className={`flex flex-col sm:flex-row gap-5 max-w-4xl ${props.className}`}>
-    <div className="">
-    <img
-          className="md:max-w-none mx-0  rounded-2xl"
-          src={props.image.url}
+
+    <div style={containerStyle}>
+    {/* <img
+          className="w-60 h-60 "
+          src={process.env.NEXT_PUBLIC_STRAPI_API_URL+props.image.url}
           alt={props.image.alt??""}
-        />
+          
+        /> */}
     </div>
     <div className=" overflow-visible">
     <div className="bg-[#002937] p-3 w-fit">

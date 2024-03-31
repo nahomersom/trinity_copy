@@ -25,7 +25,7 @@ export default  function Sermons() {
     // Code here will run on the client side    process.env.NEXT_PUBLIC_STRAPI_API_URL
      getSermonsList()?.then((res) => {
     
-      setSermons(res)
+      setSermons(res??[])
 
       console.log("screammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
       console.log(sermonList);
@@ -82,9 +82,9 @@ export default  function Sermons() {
           <div className="min-h-[300px] ">
           <div className="grid grid-cols-3 gap-3 items-center">
             {sermonList.map((value, index) => (
-              <div className="pt-3 flex  flex-col items-start">
+              <div key={index} className="pt-3 flex  flex-col items-start">
                 <div className=" items-center">
-                <ModalVideo   thumb={"images/pastor.svg"} thumbWidth={350} thumbHeight={300} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+value.vedioUrl} videoWidth={650} videoHeight={600}/>
+                <ModalVideo   thumb={"/images/pastor.svg"} thumbWidth={290} thumbHeight={200} thumbAlt={""} video={process.env.NEXT_PUBLIC_STRAPI_API_URL+value.vedioUrl} videoWidth={650} videoHeight={600}/>
 
                 </div>
                 <div className="text-base text-black font-Raleway font-semibold leading-4 p-1 pl-3">

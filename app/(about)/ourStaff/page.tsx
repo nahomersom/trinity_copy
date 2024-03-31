@@ -7,26 +7,30 @@ import { PageTitle } from "@/components/utils/page-title";
 import StaffDetail from "@/components/staff-detail";
 import { StaffType, getStaffList } from "@/app/api/staff";
 import { useRouter } from "next/router";
+import { number } from "yup";
 
 export default async function OurStaff() {
   let staffs: StaffType[] = [];
-  
+
   try {
     staffs = (await getStaffList()) || []; // Ensure staffs is an array even if getStaffList returns null or undefined
   } catch (error) {
     console.error("Error fetching staff list:", error);
   }
 
-  const st1: string = " mt-20 sm:self-center  mr-10";
-  const st2: string = "sm:self-end mb-10 max-w-xl mr-5 mt-10 md:mt-0";
-  const st3: string = "sm:self-end mb-10 md:mr-20 max-w-xl md:ml-10 mt-10 md:mt-0 ";
-  const st4: string = "self-center md:mt-16 mb-20 mr-10";
-  const st5: string = "sm:self-end mb-10 max-w-xl mr-5 mt-10 md:mt-0";
+  const st1: string = "sm:self-start ml-0 sm:ml-[10%]"; //slate
+  const st2: string =
+    "sm:self-end mb-10  max-w-xl   mr-5 mt-10 md:mt-10"; // red
+  const st3: string =
+    "sm:self-start ml-0 md:mr-20 max-w-xl md:ml-10 mt-10 md:mt-0  "; // amber
+  const st4: string = "self-center md:mt-16 mb-20 md:ml-40 mr-10 "; //green
+
+  var currentItem: any = 0;
 
   return (
     <section className="pt-20 md:pt-20">
       <div className="bg-white pl-[8%] pb-20">
-        <div className="ml-auto w-3/2 pt-10 pl-[5%] md:pl-[15%] pr-[4%]">
+        <div className="ml-auto w-3/2 pt-10 pl-[5%] md:pl-[15%] pr-[4%]   ">
           <PageTitle title="Our Staff" />
           <div>
             <p className="font-raleway font-normal text-base leading-5 text-black">
@@ -42,26 +46,41 @@ export default async function OurStaff() {
             </p>
           </div>
         </div>
-        <div className="mt-8 flex flex-col justify-normal items-start">
-          {staffs.map((value, index) => (
-            <StaffDetail
-              key={index} // Add key prop for each StaffDetail component
-              className={
-                (index + 1) % 5 === 0
-                  ? st5
-                  : (index + 1) % 4 === 0
-                  ? st4
-                  : (index + 1) % 3 === 0
-                  ? st3
-                  : (index + 1) % 2 === 0
-                  ? st2
-                  : st1
-              }
-              image={value.image || null} // Ensure image is not null
-              name={value.name}
-              description={value.description ?? ""}
-            />
-          ))}
+        <div className="mt-28 flex flex-col justify-normal items-start ">
+          {staffs.map((value, index) => {
+            currentItem += 1;
+            if (currentItem > 4) {
+              currentItem = 1;
+            }
+            return (
+              <StaffDetail
+                key={index} // Add key prop for each StaffDetail component
+                className={
+                  // (index+1)%2 ==0?st2:stOdd
+                  // (index + 1) % 5 === 0
+                  //   ? st5
+                  //   : (index + 1) % 4 === 0
+                  //   ? st4
+                  //   : (index + 1) % 3 === 0
+                  //   ? st3
+                  //   : (index + 1) % 2 === 0
+                  //   ? st2
+                  //   : st1
+                  currentItem == 1
+                    ? st1
+                    : currentItem == 2
+                    ? st2
+                    : currentItem == 3
+                    ? st3
+                   
+                    : st4
+                }
+                image={value.image || null} // Ensure image is not null
+                name={value.name}
+                description={value.description ?? ""}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
