@@ -3,7 +3,7 @@
 import { PageTitle } from "@/components/utils/page-title";
 
 import Partner from "@/components/partner";
-import { usePathname, useRouter } from "next/navigation";
+// import { usePathname, useRouter } from "next/navigation";
 import { PartnersType, getPartnersList } from "@/app/api/partners";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,7 +18,7 @@ export default function OurPartners() {
         toast.error(e);
       });
   }, []);
-  const currentPath = usePathname();
+  // const currentPath = usePathname();
   return (
     <section className="pt-20 md:pt-20 ">
       <div className="bg-white pl-[8%] pb-20 ">
@@ -46,7 +46,7 @@ export default function OurPartners() {
                    value.image
                 }
                 logo={value.logo}
-                link={currentPath + "/" + value.id}
+                link={value.id}
               ></Partner>
             ))}
           </div>

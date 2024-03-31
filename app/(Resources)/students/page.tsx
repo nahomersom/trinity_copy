@@ -21,7 +21,8 @@ export default function Students() {
     }, []);
 
     const imageTemplate = (props:any) => {
-        const src = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${props.profilePicture.url}`;
+
+        const src = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${props.profilePicture?.url}`;
         return (
             <div className='image'>
                 <img src={src} className="w-12 h-12 rounded-full" alt={props.EmployeeID}/>

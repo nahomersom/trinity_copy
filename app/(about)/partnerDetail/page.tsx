@@ -1,15 +1,16 @@
-// pages/about/ourPartners/[Id].tsx
 
+"use client"
 import { PageTitle } from "@/components/utils/page-title";
 import Partner from "@/components/partner";
 import { PartnersType, getPartnerById } from "@/app/api/partners";
 import { useEffect, useState } from "react";
+// import { useRouter } from "next/router";
+//  type Prop={
+//     id : string
+//  }
 
-type Props = {
-  params: { Id: string };
-};
 
-export default function OurPartners({ params }: Props) {
+export default function partnerDetail() {
   const [partnerInfo, setPartnerInfo] = useState<PartnersType>({
     id: 0,
     name: "",
@@ -17,11 +18,18 @@ export default function OurPartners({ params }: Props) {
     logo: { alt: undefined, url: "" },
     description: "",
   });
+  // const router = useRouter();
+  // const { query } = router;
+  var partnerId ="";
+  if (typeof window !== 'undefined' && window.localStorage) {
+     partnerId = localStorage.getItem("selected-partner")??"0"
+}
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getPartnerById(+params.Id);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ---------- ", partnerId)
+        const data = await getPartnerById(+partnerId);
         setPartnerInfo(data ?? partnerInfo);
       } catch (error) {
         console.error("Error fetching partner info:", error);
@@ -32,7 +40,7 @@ export default function OurPartners({ params }: Props) {
 
     // Clean-up function
     return () => {};
-  }, [params.Id]);
+  }, [partnerId]);
 
   return (
     <section className="pt-20 md:pt-20">
@@ -41,11 +49,11 @@ export default function OurPartners({ params }: Props) {
           <PageTitle title={partnerInfo.name} />
 
           <div className="flex flex-col justify-around gap-16 pb-10 w-full items-stretch px-0">
-            <Partner
+            {/* <Partner
               name={partnerInfo.name}
               image={partnerInfo.image}
               logo={partnerInfo.logo}
-            />
+            /> */}
           </div>
           <div>
             <p className="font-raleway font-normal text-2xl leading-7 text-justify text-black">

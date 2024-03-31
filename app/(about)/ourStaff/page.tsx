@@ -6,8 +6,6 @@ export const metadata = {
 import { PageTitle } from "@/components/utils/page-title";
 import StaffDetail from "@/components/staff-detail";
 import { StaffType, getStaffList } from "@/app/api/staff";
-import { useRouter } from "next/router";
-import { number } from "yup";
 
 export default async function OurStaff() {
   let staffs: StaffType[] = [];
