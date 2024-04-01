@@ -175,7 +175,7 @@ export default function SignIn() {
                 </span>
                 <span className=" text-xl font-bold leading-4">
                   {" "}
-                  <Link href={"signup"}>Sign-up here.</Link>{" "}
+                  <Link href={"/signup"}>Sign-up here.</Link>{" "}
                 </span>
               </div>
             </form>

@@ -84,7 +84,7 @@ export default function GiveGrade() {
     // };
 
 
-      const res = await fetcher(
+      const res = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/student-grades`,
         {
           method: "POST",
@@ -95,17 +95,19 @@ export default function GiveGrade() {
           body: JSON.stringify(userObj),
         }
       );
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error.message || "Failed to create user");
+      }
      toast.success('Grade Added Successfully') ;
     setIsSubmitting(false);
     router.push(`/students`);
     
-    } catch (error: any) {
-      console.log('my error',error);
-      toast.error('Error',error);
-
+    } catch (error:any) {
+      console.error('Error creating user:', error);
+      toast.error(error.message);
       setIsSubmitting(false);
-
-    } 
+    }
   };
   return (
     <section className="pt-20 md:pt-20">
