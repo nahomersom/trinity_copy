@@ -169,7 +169,7 @@ export default function SignIn() {
                   </button>
                 </div>
               </div>
-              <div className="text-center italic mt-9">
+              <div className={` ${isPastorsCollage?"hidden":""} text-center italic mt-9`}>
                 <span className=" text-xl font-light leading-4">
                   Don't have and account?{" "}
                 </span>
