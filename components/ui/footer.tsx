@@ -9,7 +9,7 @@ import twitterIcon from "@/public/images/icon _twiter_footer.svg";
 export default function Footer() {
   return (
     <footer className="bg-white">
-      <div className=" max-w-5xl ml-auto mr-auto px-4 sm:px-6 sm:mr-24 sm:ml-auto">
+      <div className=" max-w-5xl mx-auto  sm:mx-auto ">
         <div className="  flex flex-col sm:flex-row justify-between items-start gap-6 py-6">
           <Logo type="dark" />
           <div className="flex items-end justify-around gap-10 self-end">
