@@ -96,7 +96,7 @@ export default function Header({
                 value.islogout ||
                 (value.link != undefined && value.link != null) ? (
                   <button
-                
+                    key ={index}
                     onClick={() => {
                       if (value.islogout) {
                         logout();
