@@ -40,7 +40,7 @@ export const getSermonsList =  async () => {
           date: sermon.attributes.date,
           description: sermon.attributes.description,
 
-          vedioUrl: sermon.attributes.video?.data.attributes.url,
+          vedioUrl: sermon.attributes.video?.data?.attributes?.url,
         });
       });
       console.log("00000000000000000000000000000000000000");
@@ -100,7 +100,7 @@ export const getLatestSermon = () => {
             article: sermon.attributes.article,
             date: sermon.attributes.date,
             description: sermon.attributes.description,
-            vedioUrl: sermon.attributes.video?.data.attributes.url,
+            vedioUrl: sermon.attributes.video?.data?.attributes?.url,
           }
           return latestSermon
       });
