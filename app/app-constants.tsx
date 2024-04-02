@@ -239,7 +239,7 @@ export const navBarItems: NavBarType[] = [
   //   student navigations
   {
     title: "Classes",
-    link: "#",
+    link: "/user-home",
     isAdminAllowed: true,
     isPublicAllowed: false,
     isStudentAllowed: true,
@@ -247,7 +247,7 @@ export const navBarItems: NavBarType[] = [
   },
   {
     title: "Calendar",
-    link: "#",
+    link: "/announcement-board",
     isAdminAllowed: false,
     isPublicAllowed: false,
     isStudentAllowed: true,

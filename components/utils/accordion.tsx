@@ -1,5 +1,6 @@
 import { unsetToken } from "@/app/api/auth";
 import { NavBarType } from "@/app/app-constants";
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 type AccordionpProps = {
@@ -58,10 +59,11 @@ export default function Accordion({
         aria-expanded={accordionOpen}
       >
         <span className="">{title}</span>
+        
         {/* downward arrow  */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`h-5 w-5 ml-2 ${accordionOpen ? "hidden" : ""}`}
+          className={`h-5 w-5 ml-2 ${accordionOpen || children ==null || children.length==0 ? "hidden" : ""}`}
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -73,7 +75,7 @@ export default function Accordion({
         {/* upward arrow */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`h-5 w-5 ml-2 ${!accordionOpen ? "hidden" : ""}`}
+          className={`h-5 w-5 ml-2 ${!accordionOpen || children ==null ||children.length==0 ? "hidden" : ""}`}
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -104,12 +106,11 @@ export default function Accordion({
             (value.isPublicAllowed && userRole.toLowerCase() == "public") ||
             (value.isStudentAllowed && userRole.toLowerCase() == "student") ? (
               <li key={index}>
-                <a
-                  href={value.link}
+                <Link href={value.link??"#"}
                   className="text-sm hover:bg-gray-100 hover:text-[#002937] text-white block text-left px-4 py-2"
                 >
                   {value.title}
-                </a>
+                </Link>
               </li>
             ) : null
           )}

@@ -12,9 +12,9 @@ import Image from "next/image";
 // import profilePic from "../../public/images/partners_pic.svg";
 import { unsetToken } from "@/app/api/auth";
 
-import { useRouter } from "next/router";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { UserRole, navBarItems } from "@/app/app-constants";
+import { useRouter } from "next/navigation";
 
 type HeaderData = {
   hasUser: boolean;
@@ -33,11 +33,15 @@ export default function Header({
   const [name, setUserName] = useState("");
   const [image, setUserImage] = useState("");
   const [userRole, setUserRole] = useState("public");
-
+  const router2 = useRouter();
 
   const navigateToPage = (page: string) => {
-    router?.push(page);
-};
+    try {
+      router2.push(page);
+    } catch (error) {
+      console.log("error navigating =====", error);
+    }
+  };
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
@@ -45,21 +49,16 @@ export default function Header({
   };
   const logout = () => {
     unsetToken();
-    userName = undefined;
-    userImage = undefined;
-
-    router?.push("/signin");
+    router2.push("/signin");
   };
   useEffect(() => {
-    if ( typeof localStorage !== "undefined") {
+    if (typeof localStorage !== "undefined") {
       var userName = localStorage.getItem("username");
-      var userRole = localStorage.getItem("userRole") ;
-      var userImage = localStorage.getItem("userProfileUrl")
+      var userRole = localStorage.getItem("userRole");
+      var userImage = localStorage.getItem("userProfileUrl");
       setUserName(userName || "");
       setUserRole(userRole || "public");
       setUserImage(userImage || "");
-
-
     }
   }, []);
 
@@ -87,25 +86,46 @@ export default function Header({
         text-[#285463] h-[59px] mr-auto self-baseline rounded-[24px] border-[1.5px] border-[#002937]"
         >
           <ul className=" flex flex-grow justify-around px-6 items-stretch  text-[#002937] text-center font-medium text-[22px] ">
-            {navBarItems.map((value, index) => (
-             ( value.isAdminAllowed && userRole.toLowerCase() == "admin")
-             || ( value.isMemberAllowed && userRole.toLowerCase() ==  "church-member" )
-             || ( value.isPublicAllowed && userRole.toLowerCase() ==  "public")
-             || ( value.isStudentAllowed && userRole.toLowerCase() ==  "student")
-             
-             ?
-              <NavDropdown
-                key={index}
-                title={value.title}
-                link={value.link}
-                children={value.children}
-                userRole={userRole}
-                navigateToPage={navigateToPage}
-                isLogout={value.islogout??false}
-              ></NavDropdown>:null
-            ))
-            
-            }
+            {navBarItems.map((value, index) =>
+              (value.isAdminAllowed && userRole.toLowerCase() == "admin") ||
+              (value.isMemberAllowed &&
+                userRole.toLowerCase() == "church-member") ||
+              (value.isPublicAllowed && userRole.toLowerCase() == "public") ||
+              (value.isStudentAllowed &&
+                userRole.toLowerCase() == "student") ? (
+                value.islogout ||
+                (value.link != undefined && value.link != null) ? (
+                  <button
+                    key ={index}
+                    onClick={() => {
+                      if (value.islogout) {
+                        logout();
+                      } else {
+                        if (value.link != null) {
+                          navigateToPage(value.link);
+                        }
+                      }
+                    }}
+                    className="text-gray-700 h-full hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 text-center
+                     py-2 md:hover:text-[#002937] md:p-0 font-medium font-playfair-display flex items-center justify-between w-full md:w-auto"
+                  >
+                    {value.title}
+                  </button>
+                ) : (
+                  <NavDropdown
+                    key={index}
+                    title={value.title}
+                    link={value.link}
+                    children={value.children}
+                    userRole={userRole}
+                    navigateToPage={(page: string) => {
+                      navigateToPage(page);
+                    }}
+                    isLogout={value.islogout ?? false}
+                  ></NavDropdown>
+                )
+              ) : null
+            )}
           </ul>
 
           {/* Desktop sign in links */}
@@ -125,11 +145,11 @@ export default function Header({
             </ul> */}
         </nav>
 
-        <MobileMenu userRole={userRole} navigateToPage={navigateToPage}/>
+        <MobileMenu userRole={userRole} navigateToPage={navigateToPage} />
 
         <div
           className={`hidden md:grow md:flex justify-center gap-4 max-w-max items-center ${
-            (userRole.toLocaleLowerCase() == "public") ? "md:hidden hidden" : ""
+            userRole.toLocaleLowerCase() == "public" ? "md:hidden hidden" : ""
           }  `}
         >
           <div className=" text-right">
