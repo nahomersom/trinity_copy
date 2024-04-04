@@ -18,6 +18,7 @@ interface createUserModel {
   password: string;
   confirmPassword: string;
   role: number;
+  blocked:boolean;
 }
 
 
@@ -45,7 +46,8 @@ export default function SignUp() {
         fullName:data.fullName,
         email:data.email,
         password:data.password,
-        role: 1
+        role: 4,
+        blocked:true
       };
        // Validate form fields
    

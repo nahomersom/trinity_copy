@@ -23,6 +23,14 @@ export const navBarItems: NavBarType[] = [
     isMemberAllowed: true,
     children: [
       {
+        title: "Donate",
+        link: "/donate",
+        isAdminAllowed: true,
+        isPublicAllowed: true,
+        isStudentAllowed: true,
+        isMemberAllowed: true,
+      },
+      {
         title: "Our Pastors",
         link: "#",
         isAdminAllowed: true,
