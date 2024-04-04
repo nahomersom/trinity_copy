@@ -71,7 +71,7 @@ export default function NavDropdown({ title, children, link, userRole, isLogout,
             || ( value.isStudentAllowed && userRole.toLowerCase() ==  "student")
              
              ?
-             <Link href={value.link??"#"} className="text-sm hover:bg-gray-100 hover:text-[#002937] text-white block text-left px-4 py-2">
+             <Link key={index} href={value.link??"#"} className="text-sm hover:bg-gray-100 hover:text-[#002937] text-white block text-left px-4 py-2">
             
                 {value.title}
               

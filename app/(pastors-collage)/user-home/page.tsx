@@ -76,13 +76,14 @@ export default function UserHome() {
 </button>
           <div className="py-16 flex flex-col justify-around gap-10  w-full items-stretch ">
             {announcements.map((value, index) => (
-              <div className="flex flex-col justify-around gap-10  w-full items-stretch">
+              <div key={index} className="flex flex-col justify-around gap-10  w-full items-stretch">
                 <hr
                   className={`${
                     index == 0 ? "hidden" : ""
                   } bg-[#002937] h-[3px] self `}
                 />
                 <Announcement
+                  key={index}
                   title={value.title}
                   Detail={value.Detail}
                   Date={value.Date}

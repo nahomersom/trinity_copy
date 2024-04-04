@@ -1,20 +1,30 @@
-export const metadata = {
-  title: "OurStaff",
-  description: "Page description",
-};
+// export const metadata = {
+//   title: "OurStaff",
+//   description: "Page description",
+// };
+"use client"
 
 import { PageTitle } from "@/components/utils/page-title";
 import StaffDetail from "@/components/staff-detail";
 import { StaffType, getStaffList } from "@/app/api/staff";
+import { useEffect, useState } from "react";
 
-export default async function OurStaff() {
-  let staffs: StaffType[] = [];
+export default function OurStaff() {
 
-  try {
-    staffs = (await getStaffList()) || []; // Ensure staffs is an array even if getStaffList returns null or undefined
-  } catch (error) {
-    console.error("Error fetching staff list:", error);
-  }
+  const [staffs, setStaffs] = useState<StaffType[]>([]);
+
+ 
+ 
+  useEffect(() => {
+    getStaffList()?.then((res) => {
+    
+      setStaffs(res??[])
+   
+    });
+
+  
+  }, []);
+
 
   const st1: string = "sm:self-start ml-0 sm:ml-[10%]"; //slate
   const st2: string =
